@@ -1,4 +1,4 @@
-FROM jupyter/base-notebook:87210526f381
+FROM jupyter/base-notebook:python-3.7.3
 
 #install some system level packages
 USER root
