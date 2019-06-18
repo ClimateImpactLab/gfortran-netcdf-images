@@ -7,6 +7,9 @@ install:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT .
 
+script:
+  - docker push "climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT"
+
 deploy:
   - provider: script
     script: docker tag climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_BRANCH && docker push "climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_BRANCH"
