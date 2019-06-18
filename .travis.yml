@@ -1,0 +1,26 @@
+services:
+  -docker
+
+install:
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+  - docker build -t climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT .
+
+deploy:
+  - provider: script
+    script: docker tag climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_BRANCH && docker push "climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_BRANCH"
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH != master
+
+  - provider: script
+    script: docker tag climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT climateimpactlab/gfortran-netcdf-notebook:latest && docker push "climateimpactlab/gfortran-netcdf-notebook:latest"
+    skip_cleanup: true
+    on:
+      branch: master
+
+  - provider: script
+    script: docker tag climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_TAG && docker push "climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_TAG"
+    skip_cleanup: true
+    on:
+      tags: true
