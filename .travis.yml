@@ -1,6 +1,7 @@
 services:
   -docker
 
+
 install:
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
   - docker build -t climateimpactlab/gfortran-netcdf-notebook:$TRAVIS_COMMIT .
