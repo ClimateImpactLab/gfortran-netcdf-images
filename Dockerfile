@@ -3,11 +3,12 @@ FROM jupyter/base-notebook:python-3.7.3
 #install some system level packages
 USER root
 
-RUN apt-get update
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get install -yq --no-install-recommends apt-utils
-
-RUN apt-get install -yq --no-install-recommends \
+RUN apt-get update -yq --fix-missing --no-install-recommends && \
+  apt-get install -yq --no-install-recommends apt-utils && \
+  apt-get upgrade -yq --no-install-recommends && \
+  apt-get install -yq --no-install-recommends \
   build-essential \
   curl \
   fonts-dejavu \
